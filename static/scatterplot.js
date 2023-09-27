@@ -21,18 +21,22 @@ function scatterplot(divID, csvFilename, config) {
 		      .attr(
 			  'transform',
 			  'translate(' + margin.left + ',' + margin.top + ')');
-    const YEARS = ["2020", "2021", "2022", "2023"];
-    const MONTHS = ["01", "02", "03", "04", "05", "06",
-	                "07", "08", "09", "10", "11", "12"]
-    let YEAR_MONTH = [];
+
+	const YEARS = ['2020', '2021', '2022', '2023'];
+	const MONTHS = [
+		'01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+		'11', '12'
+	];
+
+	let YEAR_MONTH = [];
 	for (let i = 0; i < YEARS.length; ++i) {
-	    for (let j = 0; j < MONTHS.length; ++j) {
+		for (let j = 0; j < MONTHS.length; ++j) {
 			let interval = YEARS[i] + '-' + MONTHS[j];
-            YEAR_MONTH.push(interval);
-			if (interval == "2023-08"){
+			YEAR_MONTH.push(interval);
+			if (interval == '2023-08') {
 				break;
 			}
-	    }
+		}
 	}
 
 	d3.csv(csvFilename, function(RIVET_DATA) {
@@ -166,7 +170,8 @@ function scatterplot(divID, csvFilename, config) {
 				    return RADIUS;
 				}
 				*/
-				// Shift points right to center of histogram bars
+				// Shift points right to center of histogram
+				// bars
 			})
 		    .attr(
 			'transform',
@@ -189,9 +194,11 @@ function scatterplot(divID, csvFilename, config) {
 			function(d) {
 				let strain = d['Strain'];
 				let node = d['Node'];
-				let score = Math.round(d['Score'] * 1000) / 1000;
+				let score =
+				    Math.round(d['Score'] * 1000) / 1000;
 				tooltip
-				    .html(`Strain: ${strain},  R/RA: ${score}, NodeID: ${node}`)
+				    .html(`Strain: ${strain},  R/RA: ${
+					score}, NodeID: ${node}`)
 				    .style('visibility', 'visible');
 				d3.select(this)
 				    .style('fill', 'green')

@@ -1,7 +1,7 @@
 function arrMax(arr) {
-    let max = arr[0];
-    for (let i =0; i< arr.length; ++i) {
-		if (arr[i] > max){
+	let max = arr[0];
+	for (let i = 0; i < arr.length; ++i) {
+		if (arr[i] > max) {
 			max = arr[i];
 		}
 	}
@@ -9,9 +9,9 @@ function arrMax(arr) {
 }
 
 function arrMin(arr) {
-    let min = arr[0];
-    for (let i =0; i< arr.length; ++i) {
-		if (arr[i] < min){
+	let min = arr[0];
+	for (let i = 0; i < arr.length; ++i) {
+		if (arr[i] < min) {
 			min = arr[i];
 		}
 	}
@@ -54,19 +54,21 @@ function scatterplotOverlayHistogram(
 	 "2022_12": 17219669, "2023_01": 10270797, "2023_02": 4587649}
 	 ]
 	 */
-	 const YEARS = ["2020", "2021", "2022", "2023"];
-	 const MONTHS = ["01", "02", "03", "04", "05", "06",
-					 "07", "08", "09", "10", "11", "12"]
-	 let YEAR_MONTH = [];
-	 for (let i = 0; i < YEARS.length; ++i) {
-		 for (let j = 0; j < MONTHS.length; ++j) {
-			 let interval = YEARS[i] + '-' + MONTHS[j];
-			 YEAR_MONTH.push(interval);
-			 if (interval == "2023-08"){
-				 break;
-			 }
-		 }
-	 }
+	const YEARS = ['2020', '2021', '2022', '2023'];
+	const MONTHS = [
+		'01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
+		'11', '12'
+	];
+	let YEAR_MONTH = [];
+	for (let i = 0; i < YEARS.length; ++i) {
+		for (let j = 0; j < MONTHS.length; ++j) {
+			let interval = YEARS[i] + '-' + MONTHS[j];
+			YEAR_MONTH.push(interval);
+			if (interval == '2023-08') {
+				break;
+			}
+		}
+	}
 
 	// FORMAT: {"Month": '2019-12',"Score": 20},
 	// This is the data for the phylogenetic entropy plot
@@ -113,88 +115,103 @@ function scatterplotOverlayHistogram(
 			let max_more_fit = [];
 			let max_less_fit = [];
 
-            // The variance during each time-period interval
+			// The variance during each time-period interval
 			let variance = [];
 			let max_variance = 0;
 
-            // The stddev during each time-period interval
+			// The stddev during each time-period interval
 			let stddev = [];
 			let max_std_dev = 0;
 
 			for (let i = 0; i < months.length; ++i) {
 				let points = best_fit_data[months[i]];
-				// If there are any recombinants inferred during this time interval
+				// If there are any recombinants inferred during
+				// this time interval
 				if (points) {
-					let calculated_variance = ss.variance(points);
-					let v = {'Month': months[i],
-					        'Value': calculated_variance
-						}
+					let calculated_variance =
+					    ss.variance(points);
+					let v = {
+						'Month': months[i],
+						'Value': calculated_variance
+					};
 					variance.push(v);
-					if (calculated_variance > max_variance){
-						max_variance = calculated_variance;
+					if (calculated_variance >
+					    max_variance) {
+						max_variance =
+						    calculated_variance;
 					}
 
-					let calculated_std_dev = ss.standardDeviation(points);
-					let s = {'Month': months[i],
-					        'Value': calculated_std_dev
-						}
+					let calculated_std_dev =
+					    ss.standardDeviation(points);
+					let s = {
+						'Month': months[i],
+						'Value': calculated_std_dev
+					};
 					stddev.push(s);
-					if (calculated_std_dev > max_std_dev){
-						max_std_dev = calculated_std_dev;
+					if (calculated_std_dev > max_std_dev) {
+						max_std_dev =
+						    calculated_std_dev;
 					}
 
 					let filtered_points = points.filter(
 					    (fitness) => fitness >= 1.0);
-                    
-                    if (filtered_points.length > 0) {
-     					d = {
-     						'Month': months[i],
-     						'Value': arrAvg(filtered_points)
-     					};
 
-     					d_max = {
-     						'Month': months[i],
-     						'Value': arrMax(filtered_points)
-     					};
-     					average_more_fit.push(d);
+					if (filtered_points.length > 0) {
+						d = {
+							'Month': months[i],
+							'Value': arrAvg(
+							    filtered_points)
+						};
+
+						d_max = {
+							'Month': months[i],
+							'Value': arrMax(
+							    filtered_points)
+						};
+						average_more_fit.push(d);
 						max_more_fit.push(d_max);
 
 					} else {
-     					d = {
-     						'Month': months[i],
-     						'Value': 1.0
-     					};
-     					average_more_fit.push(d);
+						d = {
+							'Month': months[i],
+							'Value': 1.0
+						};
+						average_more_fit.push(d);
 						max_more_fit.push(d);
 					}
 
-					let below_average_points = points.filter(
-					    (fit) => fit < 1.00000000);
+					let below_average_points =
+					    points.filter(
+						(fit) => fit < 1.00000000);
 
-                    if (below_average_points.length > 0) {
-    					d_below_avg = {
-    						'Month': months[i],
-    						'Value': arrAvg(below_average_points)
-    					};
-    					d_min = {
-    						'Month': months[i],
-    						'Value': arrMin(below_average_points)
-    					};
-    					average_less_fit.push(d_below_avg);
-    					max_less_fit.push(d_min);
+					if (below_average_points.length > 0) {
+						d_below_avg = {
+							'Month': months[i],
+							'Value': arrAvg(
+							    below_average_points)
+						};
+						d_min = {
+							'Month': months[i],
+							'Value': arrMin(
+							    below_average_points)
+						};
+						average_less_fit.push(
+						    d_below_avg);
+						max_less_fit.push(d_min);
 					} else {
-    					d_below_avg = {
-    						'Month': months[i],
-    						'Value': 1.0
-    					};
-    					average_less_fit.push(d_below_avg);
-    					max_less_fit.push(d_below_avg);
+						d_below_avg = {
+							'Month': months[i],
+							'Value': 1.0
+						};
+						average_less_fit.push(
+						    d_below_avg);
+						max_less_fit.push(d_below_avg);
 					}
 
 				} else {
 					d = {'Month': months[i], 'Value': 1.0};
-				    average_more_fit.push(d);
-				    average_less_fit.push(d);
+					average_more_fit.push(d);
+					average_less_fit.push(d);
 					max_more_fit.push(d);
 					max_less_fit.push(d);
 				}
@@ -219,9 +236,9 @@ function scatterplotOverlayHistogram(
 				    height, 0
 			    ]);
 
-			let yTEST = d3.scaleLinear()
-					.domain([0.0, 4.0])
-					.range([height, 0]);
+			let yTEST = d3.scaleLinear().domain([0.0, 4.0]).range([
+				height, 0
+			]);
 
 			const xAxis = d3.axisBottom(x0);
 			const yLeftAxis = d3.axisLeft(yLeft).ticks(20);
@@ -273,34 +290,51 @@ function scatterplotOverlayHistogram(
 				    .text(config['yRightAxisTitle']);
 			}
 			// --------------------------------------------------------------------------------------------
-			// Looking at correlation coefficient between more fit recombinants, on average, vs genetic diversity
+			// Looking at correlation coefficient between more fit
+			// recombinants, on average, vs genetic diversity
 			// --------------------------------------------------------------------------------------------
 
-			//console.log("RIVET On Average, More Fit Recombinants: ", average_more_fit);
+			// console.log("RIVET On Average, More Fit Recombinants:
+			// ", average_more_fit);
 			average_more_fit_counts = [];
 			for (let i = 0; i < months.length; ++i) {
-				average_more_fit_counts.push(average_more_fit[i]["Value"]);
+				average_more_fit_counts.push(
+				    average_more_fit[i]['Value']);
 			}
-			//console.log("RIVET On Average, More Fit Recombinants COUNTS: ", average_more_fit_counts);
+			// console.log("RIVET On Average, More Fit Recombinants
+			// COUNTS: ", average_more_fit_counts);
 
-			let corr_more_average = ss.sampleCorrelation(counts, average_more_fit_counts).toFixed(2);
-            //console.log('correlation coefficient plot 2: ', corr_more_average);
+			let corr_more_average =
+			    ss.sampleCorrelation(
+				  counts, average_more_fit_counts)
+				.toFixed(2);
+			// console.log('correlation coefficient plot 2: ',
+			// corr_more_average);
 
 			// --------------------------------------------------------------------------------------------
-			// Looking at correlation coefficient between less fit recombinants, on average, vs genetic diversity
+			// Looking at correlation coefficient between less fit
+			// recombinants, on average, vs genetic diversity
 			// --------------------------------------------------------------------------------------------
 
-			//console.log("LOOKING AT ON AVERAGE, LESS FIT RECOMBINANTS");
+			// console.log("LOOKING AT ON AVERAGE, LESS FIT
+			// RECOMBINANTS");
 
-			//console.log("RIVET On Average, Less Fit Recombinants: ", average_less_fit);
+			// console.log("RIVET On Average, Less Fit Recombinants:
+			// ", average_less_fit);
 			average_less_fit_counts = [];
 			for (let i = 0; i < months.length; ++i) {
-				average_less_fit_counts.push(average_less_fit[i]["Value"]);
+				average_less_fit_counts.push(
+				    average_less_fit[i]['Value']);
 			}
-			//console.log("RIVET On Average, Less Fit Recombinants COUNTS: ", average_less_fit_counts);
+			// console.log("RIVET On Average, Less Fit Recombinants
+			// COUNTS: ", average_less_fit_counts);
 
-			let corr_less_average = ss.sampleCorrelation(counts, average_less_fit_counts).toFixed(2);
-            //console.log('correlation coefficient less fit on average: ', corr_less_average);
+			let corr_less_average =
+			    ss.sampleCorrelation(
+				  counts, average_less_fit_counts)
+				.toFixed(2);
+			// console.log('correlation coefficient less fit on
+			// average: ', corr_less_average);
 
 			svg.selectAll('rect')
 			    .data(data)
@@ -369,27 +403,30 @@ function scatterplotOverlayHistogram(
 			    .style('text-decoration', 'underline')
 			    .style('font-size', '30px')
 			    .text(config['title']);
-            
+
 			if (config['variance']) {
-			let yLeftVariance =
-			    d3.scaleLinear().domain([0, max_variance]).range([
-				    height, 0
-			    ]);
+				let yLeftVariance =
+				    d3.scaleLinear()
+					.domain([0, max_variance])
+					.range([height, 0]);
 				svg.append('path')
 				    .data([variance])
 				    .attr('fill', 'none')
 				    .attr('stroke', '#ffdf00')
 				    .attr('stroke-width', 1.5)
-			    .attr(
-				'transform',
-				'translate(' + SHIFT_RIGHT + ',' + 0 + ')')
-				    .attr( 'd',
+				    .attr(
+					'transform',
+					'translate(' + SHIFT_RIGHT + ',' + 0 +
+					    ')')
+				    .attr(
+					'd',
 					d3.line()
 					    .x(function(d) {
 						    return x0(d.Month)
 					    })
 					    .y(function(d) {
-						    return yLeftVariance(d.Value)
+						    return yLeftVariance(
+							d.Value)
 					    }))
 			}
 
@@ -397,22 +434,23 @@ function scatterplotOverlayHistogram(
 			    d3.scaleLinear().domain([0, max_std_dev]).range([
 				    height, 0
 			    ]);
-				svg.append('path')
-				    .data([stddev])
-				    .attr('fill', 'none')
-				    .attr('stroke', '#FF5733')
-				    .attr('stroke-width', 1.5)
+			svg.append('path')
+			    .data([stddev])
+			    .attr('fill', 'none')
+			    .attr('stroke', '#FF5733')
+			    .attr('stroke-width', 1.5)
 			    .attr(
 				'transform',
 				'translate(' + SHIFT_RIGHT + ',' + 0 + ')')
-				    .attr( 'd',
-					d3.line()
-					    .x(function(d) {
-						    return x0(d.Month)
-					    })
-					    .y(function(d) {
-						    return yLeftStdDev(d.Value)
-					    }))
+			    .attr(
+				'd',
+				d3.line()
+				    .x(function(d) {
+					    return x0(d.Month)
+				    })
+				    .y(function(d) {
+					    return yLeftStdDev(d.Value)
+				    }))
 
 			// Add best fit line to the plot
 			if (config['best_fit']) {
@@ -421,10 +459,12 @@ function scatterplotOverlayHistogram(
 				    .attr('fill', 'none')
 				    .attr('stroke', '#AAFF00')
 				    .attr('stroke-width', 1.5)
-			    .attr(
-				'transform',
-				'translate(' + SHIFT_RIGHT + ',' + 0 + ')')
-				    .attr( 'd',
+				    .attr(
+					'transform',
+					'translate(' + SHIFT_RIGHT + ',' + 0 +
+					    ')')
+				    .attr(
+					'd',
 					d3.line()
 					    .x(function(d) {
 						    return x0(d.Month)
@@ -438,9 +478,10 @@ function scatterplotOverlayHistogram(
 				    .attr('fill', 'none')
 				    .attr('stroke', '#AAFF00')
 				    .attr('stroke-width', 1.5)
-			    .attr(
-				'transform',
-				'translate(' + SHIFT_RIGHT + ',' + 0 + ')')
+				    .attr(
+					'transform',
+					'translate(' + SHIFT_RIGHT + ',' + 0 +
+					    ')')
 				    .attr(
 					'd',
 					d3.line()
@@ -458,10 +499,12 @@ function scatterplotOverlayHistogram(
 				    .attr('fill', 'none')
 				    .attr('stroke', 'orange')
 				    .attr('stroke-width', 1.5)
-			    .attr(
-				'transform',
-				'translate(' + SHIFT_RIGHT + ',' + 0 + ')')
-				    .attr( 'd',
+				    .attr(
+					'transform',
+					'translate(' + SHIFT_RIGHT + ',' + 0 +
+					    ')')
+				    .attr(
+					'd',
 					d3.line()
 					    .x(function(d) {
 						    return x0(d.Month)
@@ -475,9 +518,10 @@ function scatterplotOverlayHistogram(
 				    .attr('fill', 'none')
 				    .attr('stroke', 'orange')
 				    .attr('stroke-width', 1.5)
-			    .attr(
-				'transform',
-				'translate(' + SHIFT_RIGHT + ',' + 0 + ')')
+				    .attr(
+					'transform',
+					'translate(' + SHIFT_RIGHT + ',' + 0 +
+					    ')')
 				    .attr(
 					'd',
 					d3.line()

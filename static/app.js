@@ -3,7 +3,7 @@ window.onload = main;
 function main() {
 	// Graph for fitness of Pango-lineages over time
 	pango_lineage_config = {
-		'title': 'Fitness of Pango Lineages Over Time',
+		'title': 'Fitness of Pango Lineages Over NC_045512.2',
 		'yAxisTitle': 'R/RA Fitness',
 		'xAxisTitle': 'Date of Pango Lineage Emergence (Month)',
 		'baseline': false
@@ -16,7 +16,7 @@ function main() {
 	// Graph for fitness of Pango-recombinant lineages over time
 	pango_recombinant_lineage_config = {
 		'title':
-		    'Fitness of Pango-identified Recombinant Lineages Over Time',
+		    'Fitness of Pango-identified Recombinant Lineages Over NC_045512.2',
 		'yAxisTitle': 'R/RA Fitness',
 		'xAxisTitle': 'Date of Emergence (Month)',
 		'baseline': false
@@ -167,7 +167,7 @@ function main() {
 	// wrt max fitness of parents
 	rivet_recombinant_lineage_max_parents_passing_config = {
 		'title':
-	    'RIVET-inferred Recombinants (Passing All Filtration Checks) Fitness Advantage Over Parents Fr/Max(Fp)',
+		    'RIVET-inferred Recombinants (Passing All Filtration Checks) Fitness Advantage Over Parents Fr/Max(Fp)',
 		'yAxisTitle': 'R/RA Fitness Advantage Over Parents',
 		'xAxisTitle': 'Date of Emergence (Month)',
 		'baseline': true
@@ -265,35 +265,36 @@ function main() {
 	};
 
 	stackedHistogram(
-	    '#stacked-lineage-hist', 'data/lineages.csv', stacked_histogram_config);
+	    '#stacked-lineage-hist', 'data/lineages.csv',
+	    stacked_histogram_config);
 
-/*
-	let checkbox = document.querySelector('#variance')
-	checkbox.addEventListener('change', function() {
-		if (this.checked) {
-			console.log('Checkbox is checked..');
-			// Show variance
-			pango_recombinant_lineage_avg_diversity_config['variance'] =
-			    true;
+	/*
+		let checkbox = document.querySelector('#variance')
+		checkbox.addEventListener('change', function() {
+			if (this.checked) {
+				console.log('Checkbox is checked..');
+				// Show variance
+				pango_recombinant_lineage_avg_diversity_config['variance']
+	   = true;
 
-			scatterplotOverlayHistogram(
-			    '#pango-recomb-lineages-avg',
-			    'diversity_scores.tsv',
-			    'RANKED_PANGO_RECOMB_STRAINS_WITH_PARENTS_AVG.csv',
-			    pango_recombinant_lineage_avg_diversity_config);
+				scatterplotOverlayHistogram(
+				    '#pango-recomb-lineages-avg',
+				    'diversity_scores.tsv',
+				    'RANKED_PANGO_RECOMB_STRAINS_WITH_PARENTS_AVG.csv',
+				    pango_recombinant_lineage_avg_diversity_config);
 
-		} else {
-			// Disable variance
-			console.log('Checkbox is not checked..');
-			pango_recombinant_lineage_avg_diversity_config['variance'] =
-			    false;
+			} else {
+				// Disable variance
+				console.log('Checkbox is not checked..');
+				pango_recombinant_lineage_avg_diversity_config['variance']
+	   = false;
 
-			scatterplotOverlayHistogram(
-			    '#pango-recomb-lineages-avg',
-			    'diversity_scores.tsv',
-			    'RANKED_PANGO_RECOMB_STRAINS_WITH_PARENTS_AVG.csv',
-			    pango_recombinant_lineage_avg_diversity_config);
-		}
-	});
-	*/
+				scatterplotOverlayHistogram(
+				    '#pango-recomb-lineages-avg',
+				    'diversity_scores.tsv',
+				    'RANKED_PANGO_RECOMB_STRAINS_WITH_PARENTS_AVG.csv',
+				    pango_recombinant_lineage_avg_diversity_config);
+			}
+		});
+		*/
 }

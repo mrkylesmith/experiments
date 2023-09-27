@@ -5,11 +5,10 @@ function randomColor() {
 }
 
 function stackedHistogram(divID, lineage_data_file, config) {
-
 	const margin = {top: 100, right: 200, bottom: 100, left: 150},
-		//TODO: Fix width once dates are matched with other histograms
+	      // TODO: Fix width once dates are matched with other histograms
 	    width = 2048 - margin.left - margin.right,
-	    height = 1100 - margin.top - margin.bottom;
+	      height = 1100 - margin.top - margin.bottom;
 
 	let svg = d3.select(divID)
 		      .append('svg')
@@ -67,9 +66,7 @@ function stackedHistogram(divID, lineage_data_file, config) {
 		for (let i = 0; i < subgroups.length; ++i) {
 			colorSet.push(randomColor());
 		}
-		let color = d3.scaleOrdinal()
-				.domain(subgroups)
-				.range(colorSet);
+		let color = d3.scaleOrdinal().domain(subgroups).range(colorSet);
 
 		const stackedData = d3.stack()
 					.keys(subgroups)
@@ -117,7 +114,8 @@ function stackedHistogram(divID, lineage_data_file, config) {
 				return y(d[0]) - y(d[1]);
 			})
 		    //.attr('width', x.bandwidth())
-			//TODO: Temp width until dates are matched with other histograms
+		    // TODO: Temp width until dates are matched with other
+		    // histograms
 		    .attr('width', 26.59090909090909)
 		    .on('mouseover',
 			function(d, i) {
@@ -144,7 +142,10 @@ function stackedHistogram(divID, lineage_data_file, config) {
 						    'Lineage: ',
 						    lineages[index]);
 						*/
-						tooltip.html(`Lineage: ${l}, Proportion: ${prop}`)
+						tooltip
+						    .html(`Lineage: ${
+							l}, Proportion: ${
+							prop}`)
 						    .style(
 							'visibility',
 							'visible');
