@@ -160,16 +160,14 @@ function scatterplot(divID, csvFilename, config) {
 		    .attr(
 			'r',
 			function(d) {
-				return RADIUS;
+				//return RADIUS;
 				// TODO: Create a lookup table for VOCs
-				/*
 				let strain = d['Strain'];
-				if (strain == "XBB") {
+				if (strain == "XBB" && config['color_voc']) {
 					return RADIUS + 5;
 				}else {
 				    return RADIUS;
 				}
-				*/
 				// Shift points right to center of histogram
 				// bars
 			})
@@ -180,15 +178,13 @@ function scatterplot(divID, csvFilename, config) {
 		    .style(
 			'fill',
 			function(d) {
-				return 'red';
-				/*
+				//return 'red';
 				let strain = d['Strain'];
-				if (strain == "XBB") {
+				if (strain == "XBB" && config['color_voc']) {
 					return 'blue';
 				}else {
 				    return 'red';
 				}
-				*/
 			})
 		    .on('mouseover',
 			function(d) {
@@ -215,7 +211,15 @@ function scatterplot(divID, csvFilename, config) {
 			    d3.select(this)
 				.attr('stroke-width', '0')
 				// TODO: Color major VOCs -> Add a lookup table
-				.style('fill', 'red')
+				//.style('fill', 'red')
+				.style('fill', function(d) {
+					let strain = d['Strain'];
+				    if (strain == "XBB" && config['color_voc']) {
+						return 'blue';
+					} else {
+						return 'red';
+					}
+				})
 		    });
 
 		// Add title to the plot

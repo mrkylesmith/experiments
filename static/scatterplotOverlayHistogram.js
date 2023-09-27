@@ -20,7 +20,7 @@ function arrMin(arr) {
 
 function scatterplotOverlayHistogram(
     divID, csvHistFilename, csvScatterFilename, config) {
-	let margin = {top: 100, right: 200, bottom: 60, left: 150},
+	let margin = {top: 200, right: 200, bottom: 200, left: 150},
 	    width = 2300 - margin.left - margin.right,
 	    height = 1100 - margin.top - margin.bottom;
 	// Cobalt Blue -> Light Blue
@@ -86,8 +86,9 @@ function scatterplotOverlayHistogram(
 			for (let i = 0; i < RIVET_DATA.length; ++i) {
 				d = {
 					'Month': RIVET_DATA[i]['Month'],
-					'Score':
-					    parseFloat(RIVET_DATA[i]['Score'])
+					'Score': parseFloat(RIVET_DATA[i]['Score']),
+					'Strain': RIVET_DATA[i]['Strain'],
+					'Node': RIVET_DATA[i]['Node']
 				};
 				RIVET_DATA_OBJECT.push(d);
 			}
@@ -243,6 +244,15 @@ function scatterplotOverlayHistogram(
 			const xAxis = d3.axisBottom(x0);
 			const yLeftAxis = d3.axisLeft(yLeft).ticks(20);
 			const yLeftAxisTEST = d3.axisLeft(yTEST).ticks(20);
+			const tooltip = d3.select(divID)
+				    .append('div')
+				    .attr('id', 'tooltip')
+				    .style('position', 'absolute')
+				    .style('visibility', 'hidden')
+				    .style('padding', '15px')
+				    .style('background', 'rgba(0,0,0,0.6)')
+				    .style('border-radius', '5px')
+				    .style('color', 'white');
 
 			svg.append('g')
 			    .attr('class', 'bottomAxis')
@@ -392,7 +402,40 @@ function scatterplotOverlayHistogram(
 			    .attr(
 				'transform',
 				'translate(' + SHIFT_RIGHT + ',' + 0 + ')')
-			    .style('fill', 'red');
+			    .style('fill', 'red')
+				.on('mouseover',
+			function(d) {
+				let strain = d['Strain'];
+				let node = d['Node'];
+				let score =
+				    Math.round(d['Score'] * 1000) / 1000;
+				tooltip
+				    .html(`Strain: ${strain},  R/RA: ${
+					score}, NodeID: ${node}`)
+				    .style('visibility', 'visible');
+
+				d3.select(this)
+				    .style('fill', 'green')
+				    .attr('stroke-width', '1')
+				    .attr('stroke', 'black');
+			})
+		    .on('mousemove',
+			function() {
+				tooltip.style('top', (event.pageY - 10) + 'px')
+				    .style('left', (event.pageX + 10) + 'px');
+			})
+		    .on('mouseout', function() {
+			    tooltip.html(``).style('visibility', 'hidden');
+			    d3.select(this)
+				.attr('stroke-width', '0')
+				// TODO: Color major VOCs -> Add a lookup table
+				.style('fill', 'red')
+		    });
+				
+				
+				
+				
+				;
 
 			// Add title to the plot
 			svg.append('text')
@@ -429,7 +472,7 @@ function scatterplotOverlayHistogram(
 							d.Value)
 					    }))
 			}
-
+			if (config['stddev']) {
 			let yLeftStdDev =
 			    d3.scaleLinear().domain([0, max_std_dev]).range([
 				    height, 0
@@ -451,6 +494,7 @@ function scatterplotOverlayHistogram(
 				    .y(function(d) {
 					    return yLeftStdDev(d.Value)
 				    }))
+			}
 
 			// Add best fit line to the plot
 			if (config['best_fit']) {
@@ -497,7 +541,7 @@ function scatterplotOverlayHistogram(
 				svg.append('path')
 				    .data([max_more_fit])
 				    .attr('fill', 'none')
-				    .attr('stroke', 'orange')
+				    .attr('stroke', 'black')
 				    .attr('stroke-width', 1.5)
 				    .attr(
 					'transform',
@@ -516,7 +560,7 @@ function scatterplotOverlayHistogram(
 				svg.append('path')
 				    .data([max_less_fit])
 				    .attr('fill', 'none')
-				    .attr('stroke', 'orange')
+				    .attr('stroke', 'black')
 				    .attr('stroke-width', 1.5)
 				    .attr(
 					'transform',
@@ -532,6 +576,37 @@ function scatterplotOverlayHistogram(
 						    return yTEST(d.Value)
 					    }))
 			}
+
+
+			const legend_square_size = 25;
+			const COLORS = d3.scaleOrdinal().range(['#ffdf00', '#FF5733', '#AAFF00', 'black']);
+			let legend = svg.selectAll('labels')
+			  .data([
+				'Variance',
+				'Standard Deviation',
+				'Average-Fitness',
+				'Max-Fitness'
+			  ])
+			  .enter()
+			  .append('g')
+			  .attr('transform', function(d, i) {
+				return 'translate(0,' + i * 35 + ')';
+			  });
+	  
+			legend.append('rect')
+				.attr('x', width-100)
+				.attr('y', -190)
+				.attr('width', legend_square_size)
+				.attr('height', legend_square_size)
+				.style('fill', COLORS);
+			legend.append('text')
+				.attr('x', width - 60)
+				.attr('y', -180)
+				.attr('dy', '.50em')
+				.style('text-anchor', 'start')
+				.text(function(d) {
+				  return d;
+				});
 		});
 	});
 }

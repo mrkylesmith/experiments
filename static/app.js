@@ -6,7 +6,8 @@ function main() {
 		'title': 'Fitness of Pango Lineages Over NC_045512.2',
 		'yAxisTitle': 'R/RA Fitness',
 		'xAxisTitle': 'Date of Pango Lineage Emergence (Month)',
-		'baseline': false
+		'baseline': false,
+		'color_voc': true
 	};
 
 	scatterplot(
@@ -19,7 +20,8 @@ function main() {
 		    'Fitness of Pango-identified Recombinant Lineages Over NC_045512.2',
 		'yAxisTitle': 'R/RA Fitness',
 		'xAxisTitle': 'Date of Emergence (Month)',
-		'baseline': false
+		'baseline': false,
+		'color_voc': true
 	};
 
 	scatterplot(
@@ -50,14 +52,37 @@ function main() {
 		'time-interval': 'month',
 		'baseline': true,
 		'best_fit': true,
-		'capacity': true,
-		'variance': false
+		'capacity': false,
+		'variance': false,
+		'stddev': false
 	};
 
 	scatterplotOverlayHistogram(
 	    '#pango-recomb-lineages-avg', 'data/diversity_scores.tsv',
 	    'data/RANKED_PANGO_RECOMB_STRAINS_WITH_PARENTS_AVG.csv',
 	    pango_recombinant_lineage_avg_diversity_config);
+
+		pango_recombinant_lineage_avg_trends_diversity_config = {
+			'title':
+				'Fitness of Pango-identified Recombinant Lineages wrt Avg Parents Over Time vs Standing Genetic Diversity',
+			'yAxisTitle': 'R/RA Fitness Advantage Over Parents Fr/Avg(Fp)',
+			'yRightAxisTitle': 'Phylogenetic Entropy Score',
+			'xAxisTitle': 'Date of Emergence (Month)',
+			// time-interval: "month" or "week" or "quarter"
+			// TODO: Generate the data for all these types and have it be
+			// loadable upon click.
+			'time-interval': 'month',
+			'baseline': true,
+			'best_fit': false,
+			'capacity': false,
+			'variance': true,
+			'stddev': true
+		};
+	
+		scatterplotOverlayHistogram(
+			'#pango-recomb-lineages-avg-trends', 'data/diversity_scores.tsv',
+			'data/RANKED_PANGO_RECOMB_STRAINS_WITH_PARENTS_AVG.csv',
+			pango_recombinant_lineage_avg_trends_diversity_config);
 
 	/*
 	pango_recombinant_lineage_max_config = {
@@ -73,7 +98,7 @@ function main() {
 
 	pango_recombinant_lineage_max_diversity_config = {
 		'title':
-		    'Fitness of Pango-identified Recombinant Lineages wrt Max Parents Over Time',
+		    'Fitness of Pango-identified Recombinant Lineages wrt Max Parents Over Time vs Standing Genetic Diversity',
 		'yAxisTitle': 'R/RA Fitness Advantage Over Parents Fr/Max(Fp)',
 		'yRightAxisTitle': 'Phylogenetic Entropy Score',
 		'xAxisTitle': 'Date of Emergence (Month)',
@@ -83,8 +108,9 @@ function main() {
 		'time-interval': 'month',
 		'baseline': true,
 		'best_fit': true,
-		'capacity': true,
-		'variance': false
+		'capacity': false,
+		'variance': false,
+		'stddev': false
 	};
 
 	scatterplotOverlayHistogram(
@@ -92,12 +118,38 @@ function main() {
 	    'data/RANKED_PANGO_RECOMB_STRAINS_WITH_PARENTS_MAX.csv',
 	    pango_recombinant_lineage_max_diversity_config);
 
+	pango_recombinant_lineage_max_trends_diversity_config = {
+		'title':
+		    'Fitness of Pango-identified Recombinant Lineages wrt Max Parents Over Time vs Standing Genetic Diversity',
+		'yAxisTitle': 'R/RA Fitness Advantage Over Parents Fr/Max(Fp)',
+		'yRightAxisTitle': 'Phylogenetic Entropy Score',
+		'xAxisTitle': 'Date of Emergence (Month)',
+		// time-interval: "month" or "week" or "quarter"
+		// TODO: Generate the data for all these types and have it be
+		// loadable upon click.
+		'time-interval': 'month',
+		'baseline': true,
+		'best_fit': false,
+		'capacity': false,
+		'variance': true,
+		'stddev': true
+	};
+
+	scatterplotOverlayHistogram(
+	    '#pango-recomb-lineages-max-trends', 'data/diversity_scores.tsv',
+	    'data/RANKED_PANGO_RECOMB_STRAINS_WITH_PARENTS_MAX.csv',
+	    pango_recombinant_lineage_max_trends_diversity_config);
+
+
+
+
 	rivet_recombinant_lineage_reference_config = {
 		'title':
 		    'RIVET-inferred Recombinants Fitness Advantage Over NC_045512.2',
 		'yAxisTitle': 'R/RA Fitness Advantage Over NC_045512.2',
 		'xAxisTitle': 'Date of Emergence (Month)',
-		'baseline': false
+		'baseline': false,
+		'color_voc': false
 	};
 
 	scatterplot(
@@ -110,7 +162,9 @@ function main() {
 		    'RIVET-inferred Recombinants (Passing All Filtration Checks) Fitness Advantage Over NC_045512.2',
 		'yAxisTitle': 'R/RA Fitness Advantage Over NC_045512.2',
 		'xAxisTitle': 'Date of Emergence (Month)',
-		'baseline': false
+		'baseline': false,
+		'color_voc': false
+
 	};
 
 	scatterplot(
@@ -125,7 +179,8 @@ function main() {
 		    'RIVET-inferred Recombinants Fitness Advantage Over Parents Fr/Avg(Fp)',
 		'yAxisTitle': 'R/RA Fitness Advantage Over Parents',
 		'xAxisTitle': 'Date of Emergence (Month)',
-		'baseline': true
+		'baseline': true,
+		'color_voc': false
 	};
 
 	scatterplot(
@@ -140,7 +195,8 @@ function main() {
 		    'RIVET-inferred Recombinants (Passing All Filtration Checks) Fitness Advantage Over Parents Fr/Avg(Fp)',
 		'yAxisTitle': 'R/RA Fitness Advantage Over Parents',
 		'xAxisTitle': 'Date of Emergence (Month)',
-		'baseline': true
+		'baseline': true,
+		'color_voc': false
 	};
 
 	scatterplot(
@@ -155,7 +211,8 @@ function main() {
 		    'RIVET-inferred Recombinants Fitness Advantage Over Parents Fr/Max(Fp)',
 		'yAxisTitle': 'R/RA Fitness Advantage Over Parents',
 		'xAxisTitle': 'Date of Emergence (Month)',
-		'baseline': true
+		'baseline': true,
+		'color_voc': false
 	};
 
 	scatterplot(
@@ -170,7 +227,8 @@ function main() {
 		    'RIVET-inferred Recombinants (Passing All Filtration Checks) Fitness Advantage Over Parents Fr/Max(Fp)',
 		'yAxisTitle': 'R/RA Fitness Advantage Over Parents',
 		'xAxisTitle': 'Date of Emergence (Month)',
-		'baseline': true
+		'baseline': true,
+		'color_voc': false
 	};
 
 	scatterplot(
@@ -181,14 +239,15 @@ function main() {
 
 	rivet_recombinant_diversity_rivet_max_config = {
 		'title':
-		    'RIVET-inferred Recombinants Fitness Advantage Over Parents vs Standing Genetic Diveristy',
+		    'RIVET-inferred Recombinants Fitness Advantage Over Parents vs Standing Genetic Diversity',
 		'yAxisTitle': 'R/RA Fitness Advantage Over Parents Fr/Max(Fp)',
 		'yRightAxisTitle': 'Phylogenetic Entropy Score',
 		'xAxisTitle': 'Date of Emergence (Month)',
 		'baseline': true,
 		'best_fit': true,
 		'capacity': true,
-		'variance': false
+		'variance': false,
+		'stddev': false
 	};
 
 	scatterplotOverlayHistogram(
@@ -196,16 +255,35 @@ function main() {
 	    'data/RANKED_PANGO_RECOMB_PARENTS_MAX_STRAINS.csv',
 	    rivet_recombinant_diversity_rivet_max_config);
 
+	rivet_recombinant_diversity_rivet_max_trends_config = {
+		'title':
+		    'RIVET-inferred Recombinants Fitness Advantage Over Parents vs Standing Genetic Diversity',
+		'yAxisTitle': 'R/RA Fitness Advantage Over Parents Fr/Max(Fp)',
+		'yRightAxisTitle': 'Phylogenetic Entropy Score',
+		'xAxisTitle': 'Date of Emergence (Month)',
+		'baseline': true,
+		'best_fit': false,
+		'capacity': false,
+		'variance': true,
+		'stddev': true
+	};
+
+	scatterplotOverlayHistogram(
+	    '#rivet-recomb-overlay-diversity-max-trends', 'data/diversity_scores.tsv',
+	    'data/RANKED_PANGO_RECOMB_PARENTS_MAX_STRAINS.csv',
+	    rivet_recombinant_diversity_rivet_max_trends_config);
+
 	rivet_recombinant_diversity_rivet_max_passing_config = {
 		'title':
-		    'RIVET-inferred Recombinants (Passing All Filtration Checks) Fitness Advantage Over Parents vs Standing Genetic Diveristy',
+		    'RIVET-inferred Recombinants (Passing All Filtration Checks) Fitness Advantage Over Parents vs Standing Genetic Diversity',
 		'yAxisTitle': 'R/RA Fitness Advantage Over Parents Fr/Max(Fp)',
 		'yRightAxisTitle': 'Phylogenetic Entropy Score',
 		'xAxisTitle': 'Date of Emergence (Month)',
 		'baseline': true,
 		'best_fit': true,
 		'capacity': true,
-		'variance': false
+		'variance': false,
+		'stddev': false
 	};
 
 	scatterplotOverlayHistogram(
@@ -213,6 +291,26 @@ function main() {
 	    'data/diversity_scores.tsv',
 	    'data/RANKED_PANGO_RECOMB_PARENTS_MAX_STRAINS_PASSING.csv',
 	    rivet_recombinant_diversity_rivet_max_passing_config);
+
+	rivet_recombinant_diversity_rivet_max_passing_trends_config = {
+			'title':
+				'RIVET-inferred Recombinants (Passing All Filtration Checks) Fitness Advantage Over Parents vs Standing Genetic Diversity',
+			'yAxisTitle': 'R/RA Fitness Advantage Over Parents Fr/Max(Fp)',
+			'yRightAxisTitle': 'Phylogenetic Entropy Score',
+			'xAxisTitle': 'Date of Emergence (Month)',
+			'baseline': true,
+			'best_fit': false,
+			'capacity': false,
+			'variance': true,
+			'stddev': true
+		};
+	
+		scatterplotOverlayHistogram(
+			'#rivet-recomb-overlay-diversity-max-passing-trends',
+			'data/diversity_scores.tsv',
+			'data/RANKED_PANGO_RECOMB_PARENTS_MAX_STRAINS_PASSING.csv',
+			rivet_recombinant_diversity_rivet_max_passing_trends_config);
+
 
 	rivet_recombinant_diversity_rivet_avg_config = {
 		'title':
@@ -223,13 +321,34 @@ function main() {
 		'baseline': true,
 		'best_fit': true,
 		'capacity': true,
-		'variance': false
+		'variance': false,
+		'stddev': false
 	};
 
 	scatterplotOverlayHistogram(
 	    '#rivet-recomb-overlay-diversity-avg', 'data/diversity_scores.tsv',
 	    'data/RANKED_PANGO_RECOMB_PARENTS_AVERAGE_STRAINS.csv',
 	    rivet_recombinant_diversity_rivet_avg_config);
+
+	rivet_recombinant_diversity_rivet_avg_trends_config = {
+		'title':
+		    'RIVET-inferred Recombinants Fitness Advantage Over Parents vs Standing Genetic Diversity',
+		'yAxisTitle': 'R/RA Fitness Advantage Over Parents Fr/Avg(Fp)',
+		'yRightAxisTitle': 'Phylogenetic Entropy Score',
+		'xAxisTitle': 'Date of Emergence (Month)',
+		'baseline': true,
+		'best_fit': false,
+		'capacity': false,
+		'variance': true,
+		'stddev': true
+	};
+
+	scatterplotOverlayHistogram(
+	    '#rivet-recomb-overlay-diversity-avg-trends', 'data/diversity_scores.tsv',
+	    'data/RANKED_PANGO_RECOMB_PARENTS_AVERAGE_STRAINS.csv',
+	    rivet_recombinant_diversity_rivet_avg_trends_config);
+
+
 
 	rivet_recombinant_diversity_rivet_avg_passing_config = {
 		'title':
@@ -244,7 +363,8 @@ function main() {
 		'baseline': true,
 		'best_fit': true,
 		'capacity': true,
-		'variance': false
+		'variance': false,
+		'stddev': false
 	};
 
 	scatterplotOverlayHistogram(
@@ -252,6 +372,30 @@ function main() {
 	    'data/diversity_scores.tsv',
 	    'data/RANKED_PANGO_RECOMB_PARENTS_AVERAGE_STRAINS_PASSING.csv',
 	    rivet_recombinant_diversity_rivet_avg_passing_config);
+
+
+	rivet_recombinant_diversity_rivet_avg_passing_trends_config = {
+		'title':
+		    'RIVET-inferred Recombinants (Passing All Filtration Checks) Fitness Advantage Over Parents vs Standing Genetic Diversity',
+		'yAxisTitle': 'R/RA Fitness Advantage Over Parents Fr/Avg(Fp)',
+		'yRightAxisTitle': 'Phylogenetic Entropy Score',
+		'xAxisTitle': 'Date of Emergence (Month)',
+		// time-interval: "month" or "week" or "quarter"
+		// TODO: Generate the data for all these types and have it be
+		// loadable upon click.
+		'time-interval': 'month',
+		'baseline': true,
+		'best_fit': false,
+		'capacity': false,
+		'variance': true,
+		'stddev': true
+	};
+
+	scatterplotOverlayHistogram(
+	    '#rivet-recomb-overlay-diversity-avg-passing-trends',
+	    'data/diversity_scores.tsv',
+	    'data/RANKED_PANGO_RECOMB_PARENTS_AVERAGE_STRAINS_PASSING.csv',
+	    rivet_recombinant_diversity_rivet_avg_passing_trends_config);
 
 	stacked_histogram_config = {
 		'title': 'Circulating Lineage Proportions during each Month',
@@ -261,7 +405,8 @@ function main() {
 		'baseline': true,
 		'best_fit': true,
 		'capacity': true,
-		'variance': false
+		'variance': true,
+		'stddev': true
 	};
 
 	stackedHistogram(
