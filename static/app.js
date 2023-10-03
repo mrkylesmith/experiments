@@ -413,6 +413,17 @@ function main() {
 	    '#stacked-lineage-hist', 'data/lineages.csv',
 	    stacked_histogram_config);
 
+	stacked_country_histogram_config = {
+		'title': 'Countries contributing SARS-CoV-2 genomes by month',
+		'yAxisTitle': 'Proportion of Total Genomes Contributed',
+		'xAxisTitle': 'Time Interval (Month)',
+		'baseline': true,
+	};
+
+	stackedHistogram(
+	    '#stacked-countries-hist', 'data/countries_by_month.csv',
+	    stacked_country_histogram_config);
+
 	/*
 		let checkbox = document.querySelector('#variance')
 		checkbox.addEventListener('change', function() {
