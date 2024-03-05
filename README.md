@@ -1,2 +1,2 @@
 # experiments
-[Live Site](https://mrkylesmith.github.io/experiments/index.html)
+[Live Visualizations](https://mrkylesmith.github.io/experiments/index.html)
